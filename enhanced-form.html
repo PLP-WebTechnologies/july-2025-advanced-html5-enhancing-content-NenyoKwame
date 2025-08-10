@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Enhanced Form — Sample</title>
+  <meta name="description" content="An accessible HTML5 form demo with lists, table, media, and validation. Save as enhanced-form.html." />
+  <style>
+    /* Simple, calm styling for readability */
+    :root{
+      --bg:#f7f8fa;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --primary:#4F81BD;
+      --accent:#7CA6A6;
+    }
+    body{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin:0;
+      background:var(--bg);
+      color:#111827;
+      line-height:1.45;
+    }
+    header, main, footer { padding:1.25rem; max-width:1100px; margin:0 auto; }
+    header { padding-top:2rem; padding-bottom:.5rem; }
+    h1{ margin:.25rem 0; font-size:1.5rem; }
+    .lead{ color:var(--muted); margin-bottom:1rem; }
+    .card { background:var(--card); border-radius:8px; padding:1rem; box-shadow:0 1px 4px rgba(16,24,40,.06); margin-bottom:1rem; }
+    nav ul{ display:flex; gap:.5rem; flex-wrap:wrap; list-style:none; padding:0; margin:0 0 1rem 0; }
+    nav a{ color:var(--primary); text-decoration:none; font-weight:600; }
+    form { display:grid; gap:1rem; }
+    fieldset { border:1px solid #e6eef9; padding:1rem; border-radius:6px; }
+    legend { padding:0 .5rem; font-weight:600; }
+    label { display:block; font-size:.9rem; margin-bottom:.35rem; }
+    input, select, textarea { width:100%; padding:.5rem .6rem; border:1px solid #d6dbe8; border-radius:6px; background:white; font-size:1rem; box-sizing:border-box; }
+    .row { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:1rem; }
+    .small { font-size:.85rem; color:var(--muted); margin-top:.35rem; }
+    .actions { display:flex; gap:.5rem; }
+    button { background:var(--primary); color:white; border:none; padding:.6rem .9rem; border-radius:6px; cursor:pointer; font-weight:600; }
+    button.secondary { background:#eee; color:#111; }
+    table{ width:100%; border-collapse:collapse; margin-top:.5rem; }
+    th, td { border:1px solid #eef2f6; padding:.5rem .6rem; text-align:left; font-size:.95rem; }
+    th{ background:#fbfdff; }
+    .media-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:1rem; align-items:start; }
+    @media (max-width:720px){ .row{ grid-template-columns: 1fr; } .media-grid{ grid-template-columns: 1fr; } nav ul{ flex-direction:column; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="card" role="banner">
+    <h1>Enhanced Student Order & Contact Form</h1>
+    <p class="lead">A demo page showing semantic HTML, lists, tables, media, and a full HTML5 form with validation and accessible markup.</p>
+
+    <nav aria-label="Quick links">
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#form">Form</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#media">Media</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Overview content with lists -->
+  <section id="overview" class="card" aria-labelledby="overview-heading">
+    <h2 id="overview-heading">What this page demonstrates</h2>
+    <p class="small">Key highlights:</p>
+    <ul>
+      <li>Semantic layout using <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, and <code>&lt;footer&gt;</code>.</li>
+      <li>Form includes many HTML5 input types, attributes and built-in validation.</li>
+      <li>Accessible labeling (labels, fieldsets, legends, aria-describedby).</li>
+      <li>Examples of lists, tables, image/audio/video media elements.</li>
+    </ul>
+
+    <ol>
+      <li>Complete form with placeholders, required fields, and autocomplete.</li>
+      <li>Native HTML5 validation (required, type, pattern, min/max, minlength).</li>
+      <li>Clean and maintainable code structure.</li>
+    </ol>
+  </section>
+
+  <!-- The main form -->
+  <section id="form" class="card" aria-labelledby="form-heading">
+    <h2 id="form-heading">Order & Contact Form</h2>
+
+    <!-- instructive paragraph -->
+    <p class="small">Fill in the form below. Fields marked with <strong>*</strong> are required. Use valid formats for email, phone and date.</p>
+
+    <form id="order-form" method="post" action="#" autocomplete="on" novalidate>
+      <!-- Personal / Customer information -->
+      <fieldset>
+        <legend>Customer Information</legend>
+
+        <div class="row">
+          <div>
+            <label for="customerName">Full name <span aria-hidden="true">*</span></label>
+            <input id="customerName" name="customerName" type="text" placeholder="Jane Doe" required autocomplete="name" minlength="2" aria-describedby="nameHelp" />
+            <div id="nameHelp" class="small">Enter your legal name (2+ characters).</div>
+          </div>
+
+          <div>
+            <label for="customerEmail">Email address <span aria-hidden="true">*</span></label>
+            <input id="customerEmail" name="email" type="email" placeholder="name@example.com" required autocomplete="email" aria-describedby="emailHelp" />
+            <div id="emailHelp" class="small">We will use this to send order confirmation.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="customerPhone">Phone number</label>
+            <!-- pattern enforces digits with optional + and spaces/dashes; inputmode helps mobile -->
+            <input id="customerPhone" name="phone" type="tel" placeholder="+1 555-555-5555" inputmode="tel"
+              pattern="^\+?[0-9\-\s]{7,20}$" title="Enter a valid phone number (digits, spaces or dashes)."
+              autocomplete="tel" aria-describedby="phoneHelp" />
+            <div id="phoneHelp" class="small">Include country code when possible.</div>
+          </div>
+
+          <div>
+            <label for="igHandle">Instagram handle</label>
+            <input id="igHandle" name="ig" type="text" placeholder="@janedoe" autocomplete="username" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="dob">Date of birth</label>
+            <input id="dob" name="dob" type="date" max="2008-12-31" min="1900-01-01" autocomplete="bday" />
+            <div class="small">Optional. Persons under 16 should have guardian consent.</div>
+          </div>
+
+          <div>
+            <label for="country">Country</label>
+            <select id="country" name="country" autocomplete="country">
+              <option value="">Choose...</option>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Ghana</option>
+              <option>India</option>
+              <option>China</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Order details -->
+      <fieldset>
+        <legend>Order Details</legend>
+
+        <div>
+          <label for="orderId">Order ID <span class="small">(auto)</span></label>
+          <!-- readonly demonstrates attribute -->
+          <input id="orderId" name="orderId" type="text" placeholder="Auto-generated" readonly autocomplete="off" />
+          <div class="small">This field is readonly; it would typically be generated by the server.</div>
+        </div>
+
+        <div>
+          <label for="product">Product</label>
+          <!-- datalist gives suggestions -->
+          <input id="product" name="product" list="productList" placeholder="Start typing product name" autocomplete="off" />
+          <datalist id="productList">
+            <option value="Widget A">
+            <option value="Widget B">
+            <option value="Gadget Pro">
+            <option value="Accessory Kit">
+          </datalist>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="quantity">Quantity <span aria-hidden="true">*</span></label>
+            <input id="quantity" name="quantity" type="number" min="1" max="100" value="1" required autocomplete="off" />
+          </div>
+
+          <div>
+            <label for="unitPrice">Unit price (USD) <span aria-hidden="true">*</span></label>
+            <input id="unitPrice" name="price" type="number" min="0.01" step="0.01" value="0.00" required inputmode="decimal" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="delivery">Preferred delivery date</label>
+            <input id="delivery" name="delivery" type="date" min="" aria-describedby="deliveryHelp" />
+            <div id="deliveryHelp" class="small">Choose a date at least 2 days from now. (Client-side checks may be supplemented by server validation.)</div>
+          </div>
+
+          <div>
+            <label for="paymentMethod">Payment method <span aria-hidden="true">*</span></label>
+            <select id="paymentMethod" name="payment" required>
+              <option value="">Select...</option>
+              <option>Card</option>
+              <option>PayPal</option>
+              <option>Bank Transfer</option>
+            </select>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Delivery options</legend>
+          <label><input type="radio" name="deliveryOpt" value="standard" checked /> Standard (3–5 days)</label><br />
+          <label><input type="radio" name="deliveryOpt" value="express" /> Express (1–2 days)</label><br />
+          <label><input type="checkbox" name="gift" value="yes" /> Gift wrap (additional fee)</label>
+        </fieldset>
+      </fieldset>
+
+      <!-- Additional information and file upload -->
+      <fieldset>
+        <legend>Additional information</legend>
+        <label for="notes">Order notes</label>
+        <textarea id="notes" name="notes" rows="4" placeholder="Anything we should know?"></textarea>
+
+        <label for="attachment">Attach a file (optional)</label>
+        <input id="attachment" name="attachment" type="file" accept=".pdf,.jpg,.png" />
+
+        <div class="small">Allowed: PDF, JPG, PNG. Files handled by server after submission.</div>
+      </fieldset>
+
+      <!-- Preview table & summary (example of table usage) -->
+      <section aria-labelledby="products" class="card" id="products">
+        <h3 id="products-heading">Order summary (example)</h3>
+        <p class="small">This small table demonstrates a typical order breakdown.</p>
+
+        <table aria-describedby="tableDesc">
+          <caption id="tableDesc">Products included in this sample order</caption>
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Line total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Widget A</td>
+              <td>2</td>
+              <td>$12.00</td>
+              <td>$24.00</td>
+            </tr>
+            <tr>
+              <td>Gadget Pro</td>
+              <td>1</td>
+              <td>$68.00</td>
+              <td>$68.00</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="3" style="text-align:right">Subtotal</th>
+              <td>$92.00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+
+      <!-- Accessibility controls and submit -->
+      <div class="actions" role="group" aria-label="Form actions">
+        <button type="submit">Submit Order</button>
+        <button type="reset" class="secondary">Reset</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Media section -->
+  <section id="media" class="card" aria-labelledby="mediaHeading">
+    <h2 id="mediaHeading">Media examples</h2>
+    <p class="small">Use of image, audio and video with controls and captions for accessibility.</p>
+
+    <div class="media-grid">
+      <figure>
+        <img src="https://via.placeholder.com/560x315.png?text=Product+Image" alt="Mock product image showing a sample widget" style="width:100%; height:auto; border-radius:6px;" />
+        <figcaption class="small">Example product image (placeholder).</figcaption>
+      </figure>
+
+      <figure>
+        <video controls width="100%" aria-label="Demo video">
+          <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+          Your browser does not support the video element.
+        </video>
+        <figcaption class="small">Short demo video (public domain sample).</figcaption>
+      </figure>
+
+      <figure>
+        <audio controls style="width:100%;">
+          <source src="https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        <figcaption class="small">Audio sample with controls.</figcaption>
+      </figure>
+
+      <aside class="card" aria-label="Tips">
+        <h4>Tips</h4>
+        <ul>
+          <li>Keep labels concise and placed close to inputs.</li>
+          <li>Use <code>aria-describedby</code> for helper text or instructions.</li>
+          <li>Prefer semantic layout and accessible media captions/alt text.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="card" role="contentinfo">
+  <p class="small">This demo emphasizes semantic HTML, accessibility and native HTML5 validation. All form inputs are for demo only — the <code>action="#"</code> attribute means this form will not actually submit to a server.</p>
+</footer>
+
+<!-- Small inline script to demonstrate dynamic behaviours without replacing core HTML validity -->
+<script>
+  (function(){
+    // Example: auto-generate a simple read-only Order ID when name & date are filled.
+    const form = document.getElementById('order-form');
+    const nameInput = document.getElementById('customerName');
+    const dateInput = document.getElementById('delivery');
+    const orderIdInput = document.getElementById('orderId');
+
+    function makeOrderId() {
+      const name = (nameInput.value || '').trim();
+      const date = dateInput.value; // ISO date string or empty
+      if (name && date) {
+        const initials = name.split(/\s+/).map(n => n[0]).slice(0,2).join('').toUpperCase() || 'XX';
+        const d = new Date(date);
+        const mm = String(d.getMonth()+1).padStart(2,'0');
+        const yy = String(d.getFullYear()).slice(-2);
+        orderIdInput.value = initials + mm + yy;
+      } else {
+        orderIdInput.value = '';
+      }
+    }
+    nameInput.addEventListener('input', makeOrderId);
+    dateInput.addEventListener('change', makeOrderId);
+
+    // Enhance delivery date min (2 days from now)
+    const delivery = document.getElementById('delivery');
+    if (delivery) {
+      const dt = new Date();
+      dt.setDate(dt.getDate() + 2);
+      const iso = dt.toISOString().split('T')[0];
+      delivery.min = iso;
+    }
+
+    // Prevent actual submission (demo only) and show validation results
+    form.addEventListener('submit', function(e){
+      if (!form.checkValidity()) {
+        // Let browser show native validation UI
+        return;
+      }
+      e.preventDefault();
+      alert('Form looks valid (demo). In production this would be sent to the server.');
+    });
+  })();
+</script>
+
+</body>
+</html>
